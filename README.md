@@ -1,5 +1,5 @@
 # Mastermind
-This is part of the Odin Project Ruby Path
+This is part of the [Odin Project Ruby Path](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby)
 
 
 ## [Assignment](https://www.theodinproject.com/lessons/ruby-mastermind)
