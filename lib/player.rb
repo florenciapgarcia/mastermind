@@ -1,13 +1,15 @@
 # frozen_string_literal: true
+require 'highline'
 
 require_relative './board'
+
 
 class Player
   attr_accessor :name, :correct_guesses
   @@total_players = []
   def initialize
-    puts 'Please enter your name'
-    name = gets.chomp
+    @cli = HighLine.new
+    name = @cli.ask 'Please enter your name'
     @name = name.capitalize
     @moves = []
     @correct_guesses = []
