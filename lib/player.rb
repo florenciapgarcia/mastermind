@@ -3,13 +3,14 @@
 require_relative './board'
 
 class Player
-  attr_accessor :name, :moves
+  attr_accessor :name, :correct_guesses
   @@total_players = []
   def initialize
     puts 'Please enter your name'
     name = gets.chomp
     @name = name.capitalize
     @moves = []
+    @correct_guesses = []
     @@total_players << self
   end
 
