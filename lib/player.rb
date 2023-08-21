@@ -5,7 +5,7 @@ require_relative './board'
 
 
 class Player
-  attr_accessor :name, :correct_guesses
+  attr_accessor :name, :correct_guesses, :moves
   @@total_players = []
   def initialize
     @cli = HighLine.new
@@ -18,6 +18,10 @@ class Player
 
   def update_moves(position)
     @moves << position
+  end
+
+  def reset_moves
+    @moves = []
   end
 
   def self.total_players
