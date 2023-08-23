@@ -2,7 +2,7 @@ module Rules
   COLOURS = ['blue', 'red', 'yellow', 'green', 'black', 'white'].freeze
 
   # RULE 4 - the player has 10 guesses
-  n_of_guesses = 10
+  N_OF_GUESSES = 10
 
   # RULE 1 - The winner is the player who solves the code with fewer guesses.
 
@@ -29,6 +29,10 @@ module Rules
     else
       'none'
     end
+  end
+
+  def winner?(colours_array, guesses_array)
+    colours_array == guesses_array
   end
 
   def randomly_choose_colours

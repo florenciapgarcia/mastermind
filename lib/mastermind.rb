@@ -3,6 +3,7 @@ require 'highline'
 require 'pastel'
 require_relative 'rules'
 require_relative 'player'
+require_relative 'board'
 
 class Mastermind
   include Rules
@@ -15,6 +16,7 @@ class Mastermind
     @player = Player.new
     @colours_array = randomly_choose_colours
     @game_over = false
+    @board = Board.new
   end
 
   def print
@@ -29,15 +31,24 @@ class Mastermind
   def play_game
     until @game_over
       rules_speech
-      4.times do
-        colour = @cli.ask "#{@pastel.blue.underline.bold(@player.name)}, please enter the colours in the order you believe they are in:" do |q|
+      N_OF_GUESSES.times do
+        4.times do |i|
+          colour = @cli.ask "Colour ##{i+1}. Input a colour and press enter" do |q|
           q.validate = /^(blue|green|white|black|red|yellow)$/i
           q.responses[:not_valid] = 'Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!'
+          end
+          @player.update_moves(peg_colour(@colours_array, colour, i))
         end
+        @game_over = winner?(@colours_array, @player.moves)
+        puts @colours_array
+        @board.display(@player.moves)
+        @player.reset_moves
+        break if @game_over
+#         black
+# green
+# yellow
+# red
       end
-      @player.moves << peg_colour(@colours_array, colour, (position.to_i - 1))
-      break
-      puts @player.moves
     end
   end
 
@@ -50,6 +61,7 @@ class Mastermind
     @cli.say "* You will see the word #{@pastel.magenta.underline("NONE")} if you've got none right."
     @cli.say "#{@pastel.bright_green.bold("Let's play....")}"
 
+    @cli.say "#{@pastel.blue.underline.bold(@player.name)}, please enter the colours in the order you believe they are in!"
   end
 
   # when game initializes it does with a guesses array and at first this array will be chosen at random
