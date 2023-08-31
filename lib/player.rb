@@ -1,8 +1,7 @@
 # frozen_string_literal: true
+
 require 'highline'
-
 require_relative './board'
-
 
 class Player
   attr_accessor :name, :correct_guesses, :moves
