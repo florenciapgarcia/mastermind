@@ -4,26 +4,32 @@ require 'highline'
 require_relative './board'
 
 class Player
-  attr_accessor :name, :correct_guesses, :moves
+  attr_accessor :name, :pegs_colours, :correct_guesses
   @@total_players = []
-  def initialize
+
+  def initialize(name = nil, pegs_colours = [], correct_guesses = [])
     @cli = HighLine.new
-    name = @cli.ask 'Please enter your name'
-    @name = name.capitalize
-    @moves = []
-    @correct_guesses = []
+    @name = name || ask_for_name
+    @pegs_colours = pegs_colours
+    @correct_guesses = correct_guesses
     @@total_players << self
   end
 
-  def update_moves(position)
-    @moves << position
+  def save_pegs_colours(position)
+    @pegs_colours << position
   end
 
-  def reset_moves
-    @moves = []
+  def reset_pegs_colours
+    @pegs_colours = []
   end
 
   def self.total_players
     @@total_players
+  end
+
+  private
+  def ask_for_name
+    cli = HighLine.new
+    cli.ask('Please enter your name').capitalize
   end
 end

@@ -22,6 +22,8 @@ module Rules
   end
 
   def peg_colour(array, colour_guess, position_guess)
+    return unless permitted_colour?(colour_guess)
+
     if perfect_guess?(array, colour_guess, position_guess)
       'black'
     elsif is_it_right_colour?(array, colour_guess)
@@ -37,5 +39,9 @@ module Rules
 
   def randomly_choose_colours
     COLOURS.sample(4)
+  end
+
+  def permitted_colour?(colour)
+    COLOURS.include?(colour)
   end
 end
