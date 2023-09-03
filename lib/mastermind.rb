@@ -28,21 +28,18 @@ class Mastermind
   # end
 
   def play_game
-    until @game_over
+    until game_over
       # show game rules to player
       game_rules
       # N_OF_GUESSES.times do
+      #
       ask_player_input
-      @game_over = winner?(@colours_array, @player.moves)
+      @game_over = winner?(colours_array, player.pegs_colours)
       # puts @colours_array
       # @board.display(@player.moves)
-      @player.reset_moves
+      player.reset_pegs_colours
       # break if @game_over
       break
-      #         black
-      # green
-      # yellow
-      # red
       # end
     end
   end
@@ -56,7 +53,7 @@ class Mastermind
     @cli.say "* You will see the word #{@pastel.magenta.underline('NONE')} if you've got none right."
     @cli.say "#{@pastel.bright_green.bold("Let's play....")}"
 
-    @cli.say "#{@pastel.blue.underline.bold(@player.name)}, please enter the colours in the order you believe they are in!"
+    @cli.say "#{@pastel.blue.underline.bold(player.name)}, please enter the colours in the order you believe they are in!"
   end
 
   def ask_player_input
@@ -66,7 +63,8 @@ class Mastermind
         q.responses[:not_valid] =
           'Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!'
       end
-      @player.update_moves(peg_colour(@colours_array, colour, i))
+      puts "DEBUG=colour:", colour
+      player.save_pegs_colours(peg_colour(colours_array, colour, i)) if colour
     end
   end
 end
