@@ -42,9 +42,14 @@ RSpec.describe Mastermind do
     let(:captured_output) { capture_output { mastermind.ask_player_input } }
 
     it 'asks the player 4 times for their colour guess' do
-      expect_any_instance_of(HighLine).to receive(:ask).exactly(4).times
-      puts 'CAPTURED OUTPUT', captured_output
-      # mastermind.ask_player_input
+      # puts 'CAPT', captured_output
+
+      # expect_any_instance_of(HighLine).to receive(:ask).exactly(4).times
+
+      expect_any_instance_of(HighLine).to receive(:ask).with("Colour #1. Input a colour and press enter").and_return('blue')
+      # expect(highline).to receive(:ask).with("Colour #2. Input a colour and press enter").and_return('red')
+
+      mastermind.ask_player_input
     end
       # context 'when the user enters an invalid colour' do
       #   it 'displays an error message' do

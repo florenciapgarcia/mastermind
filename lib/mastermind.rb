@@ -63,6 +63,7 @@ class Mastermind
         q.responses[:not_valid] =
           'Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!'
       end
+      puts "DEBUG=colour:", colour
 
       player.save_pegs_colours(peg_colour(colours_array, colour, i)) if colour
     end
