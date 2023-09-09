@@ -26,10 +26,11 @@ class Mastermind
       game_rules
       N_OF_GUESSES.times do
         ask_player_input
+
         @game_over = winner?(player.pegs_colours)
-        # puts @colours_array
         @board.display(@player.pegs_colours)
         player.reset_pegs_colours
+
         break if @game_over
       end
     end

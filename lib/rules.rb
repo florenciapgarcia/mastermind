@@ -1,5 +1,5 @@
 module Rules
-  COLOURS = ['blue', 'red', 'yellow', 'green', 'black', 'white'].freeze
+  COLOURS = %w[blue red yellow green black white].freeze
 
   # RULE 4 - the player has 10 guesses
   N_OF_GUESSES = 10
@@ -34,7 +34,7 @@ module Rules
   end
 
   def winner?(pegs_colours)
-    expected_pegs = ["black", "black", "black", "black"]
+    expected_pegs = %w[black black black black]
     pegs_colours == expected_pegs
   end
 

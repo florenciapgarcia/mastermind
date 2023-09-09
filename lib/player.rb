@@ -29,6 +29,7 @@ class Player
   end
 
   private
+
   def ask_for_name
     cli = HighLine.new
     cli.ask('Please enter your name').capitalize
