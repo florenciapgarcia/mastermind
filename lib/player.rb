@@ -5,6 +5,7 @@ require_relative './board'
 
 class Player
   attr_accessor :name, :pegs_colours, :correct_guesses
+
   @@total_players = []
 
   def initialize(name = nil, pegs_colours = [], correct_guesses = [])

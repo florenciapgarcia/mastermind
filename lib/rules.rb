@@ -33,8 +33,9 @@ module Rules
     end
   end
 
-  def winner?(colours_array, guesses_array)
-    colours_array == guesses_array
+  def winner?(pegs_colours)
+    expected_pegs = ["black", "black", "black", "black"]
+    pegs_colours == expected_pegs
   end
 
   def randomly_choose_colours

@@ -54,13 +54,13 @@ RSpec.describe Rules do
   context '#winner?' do
     context 'when the 4 colour guesses are in the right position' do
       it 'returns true' do
-        expect(game.winner?(['red', 'blue', 'black', 'green'], guessed_colours)).to eq(true)
+        expect(game.winner?(['black', 'black', 'black', 'black'])).to eq(true)
       end
     end
 
-    context 'when the 4 colour guesses are not all right' do
+    context 'when the 4 colour guesses are not all in the right' do
       it 'returns false' do
-        expect(game.winner?(['red', 'black', 'blue', 'green'], guessed_colours)).to eq(false)
+        expect(game.winner?(['black', 'none', 'black', 'white'])).to eq(false)
       end
     end
   end

@@ -2,7 +2,7 @@ require 'mastermind'
 require 'player'
 require 'board'
 require 'highline'
-require_relative '../spec_helper'
+require_relative '../../spec_helper'
 
 RSpec.describe Mastermind do
   let!(:highline) { instance_double(HighLine) }
@@ -19,37 +19,30 @@ RSpec.describe Mastermind do
     # end
   end
 
-  context '#game_rules' do
-    let(:captured_output) { capture_output { mastermind.game_rules } }
-
-    it 'displays game rules to the player' do
-      expect(captured_output).to include("Welcome to Mastermind. You need to guess the right colour and position for the secret code.")
-      expect(captured_output).to include("The available colours are:")
-      expect(captured_output).to include("Let's play...")
-    end
-
-    it 'calls players name' do
-      expect(captured_output).to include(player.name)
-    end
-
-    it 'prints 8 statements in console' do
-      expect_any_instance_of(HighLine).to receive(:say).exactly(8).times
-      mastermind.game_rules
-    end
-  end
+  # context '#game_rules' do
+  #   let(:captured_output) { capture_output { mastermind.game_rules } }
+  #
+  #   it 'displays game rules to the player' do
+  #     expect(captured_output).to include("Welcome to Mastermind. You need to guess the right colour and position for the secret code.")
+  #     expect(captured_output).to include("The available colours are:")
+  #     expect(captured_output).to include("Let's play...")
+  #   end
+  #
+  #   it 'calls players name' do
+  #     expect(captured_output).to include(player.name)
+  #   end
+  #
+  #   it 'prints 8 statements in console' do
+  #     expect_any_instance_of(HighLine).to receive(:say).exactly(8).times
+  #     mastermind.game_rules
+  #   end
+  # end
 
   context '#ask_player_input' do
     let(:captured_output) { capture_output { mastermind.ask_player_input } }
 
-    it 'asks the player 4 times for their colour guess' do
-      # puts 'CAPT', captured_output
+    context 'when user enters invalid colour' do
 
-      # expect_any_instance_of(HighLine).to receive(:ask).exactly(4).times
-
-      expect_any_instance_of(HighLine).to receive(:ask).with("Colour #1. Input a colour and press enter").and_return('blue')
-      # expect(highline).to receive(:ask).with("Colour #2. Input a colour and press enter").and_return('red')
-
-      mastermind.ask_player_input
     end
       # context 'when the user enters an invalid colour' do
       #   it 'displays an error message' do

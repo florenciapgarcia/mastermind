@@ -9,7 +9,7 @@ require_relative 'board'
 class Mastermind
   include Rules
 
-  attr_accessor :colours_array, :game_over, :player, :board, :highline
+  attr_accessor :colours_array, :game_over, :player, :board
 
   def initialize(player = Player.new, board = Board.new, colours_array = randomly_choose_colours)
     @cli = HighLine.new
@@ -20,38 +20,31 @@ class Mastermind
     @board = board
   end
 
-  # def print
-  #   puts 'ARRAY: ', @colours_array
-  #   puts is_it_right_colour?(@colours_array, 'yellow')
-  #   red = @pastel.red.clear.detach
-  #   puts red.call(peg_colour(@colours_array, 'yellow', 1))
-  # end
-
   def play_game
     until game_over
       # show game rules to player
       game_rules
-      # N_OF_GUESSES.times do
-      #
-      ask_player_input
-      @game_over = winner?(colours_array, player.pegs_colours)
-      # puts @colours_array
-      # @board.display(@player.moves)
-      player.reset_pegs_colours
-      # break if @game_over
-      break
-      # end
+      N_OF_GUESSES.times do
+        ask_player_input
+        @game_over = winner?(player.pegs_colours)
+        # puts @colours_array
+        @board.display(@player.pegs_colours)
+        player.reset_pegs_colours
+        break if @game_over
+      end
     end
   end
 
   def game_rules
+    return if player.nil?
+
     @cli.say 'Welcome to Mastermind. You need to guess the right colour and position for the secret code.'
     @cli.say "The available colours are: #{@pastel.bright_white.bold('WHITE')}, #{@pastel.bright_black.bold('BLACK')}, #{@pastel.bright_red.bold('RED')}, #{@pastel.bright_yellow.bold('YELLOW')}, #{@pastel.bright_cyan.bold('BLUE')}, #{@pastel.bright_green.bold('GREEN')}."
     @cli.say 'You have 10 guesses to get the right colour in the right position.'
     @cli.say "* You will see the word #{@pastel.bright_white.underline('WHITE')} for every colour you get right but in the wrong position,"
     @cli.say "* and the word #{@pastel.bright_black.underline('BLACK')} if you get both colour and position right."
     @cli.say "* You will see the word #{@pastel.magenta.underline('NONE')} if you've got none right."
-    @cli.say "#{@pastel.bright_green.bold("Let's play....")}"
+    @cli.say @pastel.bright_green.bold("Let's play....").to_s
 
     @cli.say "#{@pastel.blue.underline.bold(player.name)}, please enter the colours in the order you believe they are in!"
   end
@@ -63,9 +56,8 @@ class Mastermind
         q.responses[:not_valid] =
           'Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!'
       end
-      puts "DEBUG=colour:", colour
 
-      player.save_pegs_colours(peg_colour(colours_array, colour, i)) if colour
+      player.save_pegs_colours(peg_colour(colours_array, colour, i)) unless colour.nil?
     end
   end
 end
