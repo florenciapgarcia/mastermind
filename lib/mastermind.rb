@@ -21,18 +21,19 @@ class Mastermind
   end
 
   def play_game
-    until game_over
+    # until game_over
       # show game rules to player
       game_rules
       N_OF_GUESSES.times do
         ask_player_input
+
         @game_over = winner?(player.pegs_colours)
-        # puts @colours_array
         @board.display(@player.pegs_colours)
         player.reset_pegs_colours
+
         break if @game_over
       end
-    end
+    # end
   end
 
   def game_rules
@@ -60,4 +61,9 @@ class Mastermind
       player.save_pegs_colours(peg_colour(colours_array, colour, i)) unless colour.nil?
     end
   end
+
+  #todo: create a method to decide when game is over
+  # def game_over
+  #   game_over =
+  # end
 end

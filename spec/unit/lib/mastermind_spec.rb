@@ -7,11 +7,10 @@ require_relative '../../spec_helper'
 RSpec.describe Mastermind do
   let!(:highline) { instance_double(HighLine) }
   let!(:player) { instance_double(Player, name: 'Test') }
-  let!(:colour_guesses) {['red', 'blue', 'white', 'yellow']}
+  let!(:colour_guesses) { %w[red blue white yellow] }
   subject(:mastermind) { described_class.new(player) }
 
   context '#play_game' do
-
     # it "prompts the user for their guess" do
     #   allow_any_instance_of(HighLine).to receive(:ask).and_return("red")
     #   mastermind.ask_player_input
@@ -42,21 +41,20 @@ RSpec.describe Mastermind do
     let(:captured_output) { capture_output { mastermind.ask_player_input } }
 
     context 'when user enters invalid colour' do
-
     end
-      # context 'when the user enters an invalid colour' do
-      #   it 'displays an error message' do
-      #     # allow(HighLine).to receive(:ask).and_return('purple', 'blue', 'green', 'red')
-      #     allow_any_instance_of(HighLine).to receive(:ask).and_return('input_1', 'input_2', 'input_3', 'input_4')
+    # context 'when the user enters an invalid colour' do
+    #   it 'displays an error message' do
+    #     # allow(HighLine).to receive(:ask).and_return('purple', 'blue', 'green', 'red')
+    #     allow_any_instance_of(HighLine).to receive(:ask).and_return('input_1', 'input_2', 'input_3', 'input_4')
 
-      #     # expect { mastermind.play_game }.to output('Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!').to_stdout
-      #     # mastermind.play_game
-      #     # expect(cli).to receive(:ask).exactly.times(4)
+    #     # expect { mastermind.play_game }.to output('Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!').to_stdout
+    #     # mastermind.play_game
+    #     # expect(cli).to receive(:ask).exactly.times(4)
 
-      #     expect do
-      #       mastermind.play_game
-      #     end.to output('Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!').to_stdout
-      #   end
+    #     expect do
+    #       mastermind.play_game
+    #     end.to output('Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!').to_stdout
+    #   end
     # 1. it asks player 4 times for their input
     # 2. when user replies with a colour that's not allowed,
     #   2.a. it will prompt the user to re-enter a permitted colour
