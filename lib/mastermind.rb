@@ -22,17 +22,18 @@ class Mastermind
 
   def play_game
     # until game_over
-      # show game rules to player
-      game_rules
-      N_OF_GUESSES.times do
-        ask_player_input
+    # show game rules to player
+    game_rules
+    N_OF_GUESSES.times do
+      # puts 'ASK_PLAYER<IN', ask_player_input
+      ask_player_input
 
-        @game_over = winner?(player.pegs_colours)
-        @board.display(@player.pegs_colours)
-        player.reset_pegs_colours
-
-        break if @game_over
-      end
+      @game_over = winner?(player.pegs_colours.first)
+      @board.display(player.pegs_colours.first)
+      # player.reset_pegs_colours
+      # puts 'im the pegs,', player.pegs_colours
+      break if @game_over
+    end
     # end
   end
 
@@ -51,18 +52,24 @@ class Mastermind
   end
 
   def ask_player_input
+    colour_guesses = []
+    pegs_colours = []
     4.times do |i|
       colour = @cli.ask "Colour ##{i + 1}. Input a colour and press enter" do |q|
         q.validate = /^(blue|green|white|black|red|yellow)$/i
         q.responses[:not_valid] =
           'Invalid input. Please enter a valid colour: blue, green, white, black, red, yellow!'
       end
+      return if colour.nil?
 
-      player.save_pegs_colours(peg_colour(colours_array, colour, i)) unless colour.nil?
+      colour_guesses << colour
+      pegs_colours << peg_colour(colours_array, colour, i)
     end
+      player.save_pegs_colours(pegs_colours) unless colours_array.size < 4
+      player.save_colour_guesses(colour_guesses)
   end
 
-  #todo: create a method to decide when game is over
+  # todo: create a method to decide when game is over
   # def game_over
   #   game_over =
   # end

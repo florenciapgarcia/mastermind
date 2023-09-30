@@ -1,7 +1,6 @@
 require 'highline'
 
 class Board
-  # Create a HighLine object
   def initialize
     @cli = HighLine.new
   end

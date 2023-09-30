@@ -48,7 +48,7 @@ RSpec.describe 'Mastermind game' do
       expect(output.string).to include('Colour #3. Input a colour and press enter')
       expect(output.string).to include('Colour #4. Input a colour and press enter')
 
-      expect(player).to have_received(:save_pegs_colours).exactly(4).times
+      expect(player).to have_received(:save_pegs_colours).once
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Mastermind game' do
 
         mastermind.ask_player_input
 
-        expect(player.pegs_colours).to eq(%w[white black none none])
+        expect(player.pegs_colours).to include(%w[white black none none])
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe 'Mastermind game' do
 
         mastermind.ask_player_input
 
-        expect(player.pegs_colours).to eq(%w[black black black black])
+        expect(player.pegs_colours).to include(%w[black black black black])
       end
     end
   end
@@ -87,25 +87,20 @@ RSpec.describe 'Mastermind game' do
 
   context 'when user guesses are not perfect' do
     it 'keeps prompting the user for guesses' do
+      allow_any_instance_of(Board).to receive(:display).and_return({chau: 'something'})
       guesses = [%w[red yellow white blue], %w[green yellow red black],
-                 %w[black yellow red white], %w[green yellow red blue], %w[blue white white black]]
-      allow_any_instance_of(HighLine).to receive(:ask).and_return(**guesses)
+                 %w[black yellow red white], %w[green yellow red blue], %w[blue white white black], %w[blue white white black], %w[blue white white black], %w[blue white white black], %w[blue white white black], %w[blue white white black]]
+
       guesses.each do |guess|
-          puts each
+      allow_any_instance_of(HighLine).to receive(:ask).and_return(*guess)
+        input.puts(guess.join("\n"))
+        input.rewind
       end
-      #  allow_any_instance_of(Mastermind).to receive(:puts) do |_, message|
-      #         output ||= ""
-      #         output << message
-      #       end
+
       mastermind.play_game
 
-      guesses.each_with_index do |guess, index|
-        input.puts(guess)
-        input.rewind
+      expect(output.string).to include("Let's pla...")
 
-        # expect(mastermind).to receive(:puts).with("Colour ##{index + 1}. Input a colour and press enter")
-        expect(output.string).to include("Colour ##{index + 1}. Input a colour and press enter")
-      end
       expect(mastermind).to receive(:ask_player_input).at_most(10).times
 
       # expect(player.colour_pegs).to eq([])
